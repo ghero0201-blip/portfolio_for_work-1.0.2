@@ -1,0 +1,2849 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio website for a web developer: projects, skills, services, and contact.">
+  <title>Web Developer Portfolio</title>
+  <style>
+    :root {
+      --bg: #030405;
+      --bg-soft: #111833;
+      --surface: #161f3f;
+      --surface-2: #1f2a52;
+      --text: #ecf1ff;
+      --text-soft: #b8c1de;
+      --brand: #00e5c1;
+      --brand-2: #00e5c1;
+      --danger: #ff6b6b;
+      --shadow: 0 20px 45px rgba(5, 10, 28, 0.45);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --border: 1px solid rgba(255, 255, 255, 0.14);
+      --max: 1120px;
+    }
+
+    [data-theme="light"] {
+      --bg: #f4f7ff;
+      --bg-soft: #e8eeff;
+      --surface: #ffffff;
+      --surface-2: #f7f9ff;
+      --text: #1a2445;
+      --text-soft: #4f5f8c;
+      --brand: #295be6;
+      --brand-2: #0da58a;
+      --shadow: 0 20px 40px rgba(44, 76, 149, 0.18);
+      --border: 1px solid rgba(35, 64, 130, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      padding: 0.8rem 1.25rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      color: #091127;
+      background: linear-gradient(135deg, var(--brand-2), var(--brand));
+      box-shadow: var(--shadow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title h2 {
+      font-size: clamp(1.45rem, 1.9vw, 2.1rem);
+      letter-spacing: 0.2px;
+    }
+
+    .section-title p {
+      color: var(--text-soft);
+      max-width: 57ch;
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      background: transparent;
+      border-bottom: 0;
+    }
+
+    [data-theme="light"] header {
+      background: transparent;
+    }
+
+    .nav {
+      height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      animation: navDrop 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      transform: translateX(-50%);
+      font-family: Georgia, serif;
+      font-size: 1.65rem;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: -1px;
+      color: var(--brand);
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .logo::before,
+    .logo::after {
+      content: "hello";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      font: inherit;
+      color: var(--brand);
+    }
+
+    .logo::before {
+      text-shadow: -2px 0 #00ff88;
+      clip-path: inset(14% 0 58% 0);
+    }
+
+    .logo::after {
+      text-shadow: 2px 0 #00a88f;
+      clip-path: inset(62% 0 10% 0);
+    }
+
+    .logo-mark {
+      display: none;
+    }
+
+    .logo:hover {
+      transform: translateX(-50%) rotate(-5deg) scale(1.12);
+      filter: drop-shadow(0 0 14px rgba(0, 229, 193, 0.65));
+      animation: logoGlitch 0.72s steps(2, end) infinite;
+    }
+
+    .logo:hover::before,
+    .logo:hover::after {
+      opacity: 1;
+      animation: glitchSlice 0.42s steps(2, end) infinite;
+    }
+
+    .logo:hover::after {
+      animation-delay: 0.08s;
+    }
+
+    @keyframes logoGlitch {
+      0%, 100% { text-shadow: none; }
+      18% { text-shadow: -3px 0 #00ff88, 3px 0 #007d6c; }
+      20% { text-shadow: 3px 0 #00ff88, -3px 0 #007d6c; }
+      52% { text-shadow: -2px 0 #00cfae, 2px 0 #00ff88; }
+      54% { text-shadow: none; }
+    }
+
+    @keyframes glitchSlice {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(-4px, 1px); }
+      50% { transform: translate(4px, -1px); }
+      75% { transform: translate(-2px, 2px); }
+    }
+
+    @keyframes avatarGlitch {
+      0%, 100% { filter: drop-shadow(0 0 16px rgba(0, 229, 193, 0.68)); }
+      18% { filter: drop-shadow(-4px 0 0 #00ff88) drop-shadow(4px 0 0 #007d6c); }
+      20% { filter: drop-shadow(4px 0 0 #00ff88) drop-shadow(-4px 0 0 #007d6c); }
+      52% { filter: drop-shadow(-3px 0 0 #00cfae) drop-shadow(3px 0 0 #00ff88); }
+      54% { filter: drop-shadow(0 0 16px rgba(0, 229, 193, 0.68)); }
+    }
+
+    @keyframes avatarImageGlitch {
+      0%, 100% { transform: translate(0, 0); filter: none; }
+      18% { transform: translate(-3px, 1px); filter: saturate(1.3) hue-rotate(12deg); }
+      20% { transform: translate(3px, -1px); filter: saturate(1.45) hue-rotate(-10deg); }
+      52% { transform: translate(-2px, 2px); filter: brightness(1.18) hue-rotate(8deg); }
+      54% { transform: translate(0, 0); filter: none; }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+      list-style: none;
+      order: -1;
+    }
+
+    .nav-link {
+      padding: 0.4rem 0.65rem;
+      border-radius: 5px;
+      color: #f2f2f2;
+      font-family: Georgia, serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text);
+      color: var(--brand);
+      background: rgba(0, 229, 193, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 0.85rem;
+      align-items: center;
+      margin-left: auto;
+    }
+
+    .social-link {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      color: #f4f4f4;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease;
+    }
+
+    .social-link:hover {
+      color: #030405;
+      background: var(--brand);
+      border-color: var(--brand);
+      transform: translateY(-5px) rotate(12deg);
+      box-shadow: 0 0 18px rgba(0, 229, 193, 0.65);
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      background: transparent;
+      color: var(--text);
+      font-size: 1.15rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #themeBtn {
+      display: none;
+    }
+
+    .icon-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .menu-toggle {
+      display: none;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding: 8rem 0 4rem;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 45%), rgba(0, 229, 193, 0.12), transparent 22rem),
+        radial-gradient(circle at 50% 45%, rgba(0, 229, 193, 0.045), transparent 28rem),
+        #030405;
+      transition: background 0.4s ease;
+    }
+
+    .leaf-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .leaf {
+      --leaf-color: rgba(0, 229, 193, 0.38);
+      position: absolute;
+      top: -12vh;
+      left: var(--left);
+      width: var(--size);
+      height: calc(var(--size) * 0.62);
+      border-radius: 100% 0 100% 0;
+      background: linear-gradient(135deg, rgba(151, 255, 227, 0.8), var(--leaf-color) 45%, rgba(0, 78, 70, 0.16));
+      box-shadow: 0 0 13px rgba(0, 229, 193, 0.1);
+      opacity: var(--opacity);
+      transform: rotate(var(--rotation));
+      animation: leafFall var(--duration) linear var(--delay) infinite;
+      filter: blur(var(--blur));
+    }
+
+    .leaf::after {
+      content: "";
+      position: absolute;
+      left: 18%;
+      top: 50%;
+      width: 75%;
+      height: 1px;
+      background: rgba(205, 255, 243, 0.55);
+      transform: rotate(-24deg);
+      transform-origin: left center;
+    }
+
+    .leaf:nth-child(3n) {
+      border-radius: 0 100% 0 100%;
+      --leaf-color: rgba(0, 159, 134, 0.36);
+    }
+
+    .leaf:nth-child(4n) {
+      --leaf-color: rgba(79, 205, 169, 0.3);
+    }
+
+    @keyframes leafFall {
+      0% {
+        transform: translate3d(0, -12vh, 0) rotate(var(--rotation)) scale(0.7);
+      }
+      25% {
+        transform: translate3d(var(--sway-a), 25vh, 0) rotate(calc(var(--rotation) + 115deg)) scale(1);
+      }
+      55% {
+        transform: translate3d(var(--sway-b), 58vh, 0) rotate(calc(var(--rotation) + 245deg)) scale(0.86);
+      }
+      80% {
+        transform: translate3d(var(--sway-c), 87vh, 0) rotate(calc(var(--rotation) + 370deg)) scale(1.05);
+      }
+      100% {
+        transform: translate3d(var(--sway-d), 120vh, 0) rotate(calc(var(--rotation) + 520deg)) scale(0.65);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .leaf {
+        animation: none;
+        top: 25%;
+        opacity: 0.12;
+      }
+
+      .hero-avatar-wrap,
+      .hero-avatar {
+        animation: none;
+      }
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      pointer-events: none;
+      border-radius: 50%;
+      filter: blur(1px);
+      opacity: 0.55;
+    }
+
+    .hero::before {
+      width: 2px;
+      height: 2px;
+      left: 17%;
+      top: 30%;
+      background: var(--brand);
+      box-shadow:
+        110px 40px 0 1px rgba(0, 229, 193, 0.7),
+        260px 170px 0 0 rgba(255, 255, 255, 0.8),
+        690px 100px 0 1px rgba(0, 229, 193, 0.7),
+        820px 280px 0 0 rgba(255, 255, 255, 0.55),
+        500px 360px 0 0 rgba(0, 229, 193, 0.7);
+      animation: particles 7s ease-in-out infinite alternate;
+    }
+
+    .hero::after {
+      width: 28rem;
+      height: 28rem;
+      left: calc(50% - 14rem);
+      top: calc(50% - 10rem);
+      border: 1px solid rgba(0, 229, 193, 0.1);
+      animation: orbit 18s linear infinite;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 2rem;
+      align-items: center;
+      grid-template-columns: 1fr;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .sepa-badge {
+      position: absolute;
+      top: 50%;
+      left: clamp(1rem, 4vw, 4.5rem);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      max-width: 190px;
+      padding: 0.75rem 0.85rem;
+      transform: translateY(-50%);
+      border-radius: 9px;
+      color: var(--brand);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 9px rgba(0, 229, 193, 0.75);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.7s ease, visibility 0.7s ease;
+    }
+
+    .sepa-badge.visible {
+      opacity: 1;
+      visibility: visible;
+      animation: sepaGlow 3s ease-in-out infinite;
+    }
+
+    .sepa-badge::before {
+      content: "€";
+      display: grid;
+      flex: 0 0 24px;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0, 229, 193, 0.95);
+    }
+
+    @keyframes sepaGlow {
+      0%, 100% {
+        opacity: 0.76;
+        filter: brightness(0.9);
+      }
+      50% {
+        opacity: 1;
+        filter: brightness(1.22);
+      }
+    }
+
+    .tag {
+      display: inline-flex;
+      gap: 0.45rem;
+      align-items: center;
+      border: var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      padding: 0.35rem 0.75rem;
+      font-size: 0.82rem;
+      margin-bottom: 1.4rem;
+      color: var(--brand);
+      background: rgba(0, 229, 193, 0.04);
+      animation: fadeIn 1s 0.35s both;
+    }
+
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      line-height: 1.1;
+      letter-spacing: 0.2px;
+      margin-bottom: 1rem;
+      animation: titleReveal 1.1s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .accent {
+      background: linear-gradient(130deg, var(--brand-2), var(--brand));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: var(--brand);
+      background: none;
+      -webkit-text-fill-color: currentColor;
+    }
+
+    .hero p {
+      color: var(--text-soft);
+      max-width: 57ch;
+      margin: 0 auto 1.45rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+      line-height: 1.2;
+      animation: fadeIn 1s 0.6s both;
+    }
+
+    .hero p::after {
+      content: "";
+      display: block;
+      color: var(--brand);
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1.35rem;
+      animation: fadeIn 1s 0.85s both;
+    }
+
+    .quick-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+      animation: fadeIn 1s 1s both;
+    }
+
+    .stat-pill {
+      background: rgba(0, 229, 193, 0.1);
+      border: 1px solid rgba(0, 229, 193, 0.72);
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+      color: var(--brand);
+      font-size: 0.9rem;
+      box-shadow: 0 0 16px rgba(0, 229, 193, 0.08);
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stat-pill:hover {
+      transform: translateY(-4px);
+      background: rgba(0, 229, 193, 0.18);
+      box-shadow: 0 0 22px rgba(0, 229, 193, 0.24);
+    }
+
+    .hero-card {
+      display: none;
+    }
+
+    .intro-section {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(90deg, rgba(3, 10, 14, 0.94), rgba(3, 10, 14, 0.72) 48%, rgba(3, 10, 14, 0.54)),
+        url("intro-landscape.png") center / cover no-repeat,
+        radial-gradient(circle at 8% 50%, rgba(0, 229, 193, 0.13), transparent 28%),
+        radial-gradient(circle at 92% 50%, rgba(110, 168, 255, 0.1), transparent 30%),
+        #050b0d;
+    }
+
+    .intro-section::before {
+      content: "ENP";
+      position: absolute;
+      right: clamp(1rem, 8vw, 8rem);
+      top: 50%;
+      color: rgba(0, 229, 193, 0.045);
+      font: 900 clamp(7rem, 20vw, 15rem)/1 Arial, sans-serif;
+      letter-spacing: -0.12em;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .intro-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 1.6rem;
+      padding: clamp(1.5rem, 4vw, 2.8rem);
+      border: 1px solid rgba(0, 229, 193, 0.3);
+      border-radius: 20px;
+      background: linear-gradient(120deg, rgba(0, 229, 193, 0.08), rgba(4, 12, 12, 0.78) 44%, rgba(110, 168, 255, 0.05));
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22), inset 0 0 35px rgba(0, 229, 193, 0.035);
+      overflow: hidden;
+    }
+
+    .intro-socials {
+      position: absolute;
+      right: clamp(1rem, 3vw, 2rem);
+      bottom: 1.25rem;
+      z-index: 2;
+      display: flex;
+      gap: 0.65rem;
+    }
+
+    .intro-socials a {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(0, 229, 193, 0.6);
+      border-radius: 50%;
+      color: #eafffb;
+      background: rgba(2, 12, 14, 0.72);
+      font: 800 0.7rem/1 Arial, sans-serif;
+      box-shadow: 0 0 18px rgba(0, 229, 193, 0.16);
+      transition: transform 0.25s ease, color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .intro-socials a:hover {
+      color: #03100e;
+      background: var(--brand);
+      transform: translateY(-5px) scale(1.08);
+      box-shadow: 0 0 25px rgba(0, 229, 193, 0.48);
+    }
+
+    .intro-card::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -20%;
+      width: 18%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+      transform: skewX(-18deg);
+      animation: introShine 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .intro-mark {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 92px;
+      height: 92px;
+      border: 1px solid var(--brand);
+      border-radius: 18px;
+      color: var(--brand);
+      background: rgba(0, 229, 193, 0.08);
+      box-shadow: 0 0 0 9px rgba(0, 229, 193, 0.04), 0 0 30px rgba(0, 229, 193, 0.14);
+      font: 800 1.25rem/1 "Courier New", monospace;
+      animation: introMarkFloat 4s ease-in-out infinite;
+    }
+
+    .intro-mark::before,
+    .intro-mark::after {
+      content: "";
+      position: absolute;
+      border: 1px dashed rgba(0, 229, 193, 0.35);
+      border-radius: 50%;
+      animation: introSpin 12s linear infinite;
+    }
+
+    .intro-mark::before { inset: -14px; }
+    .intro-mark::after { inset: -25px; animation-direction: reverse; animation-duration: 17s; }
+
+    .intro-copy {
+      position: relative;
+      z-index: 1;
+      direction: rtl;
+      text-align: right;
+    }
+
+    .intro-label {
+      display: inline-block;
+      margin-bottom: 0.55rem;
+      color: var(--brand);
+      font: 800 0.75rem/1.2 Arial, sans-serif;
+      letter-spacing: 0.14em;
+    }
+
+    .intro-copy h2 {
+      color: #f3f5f4;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 3vw, 2.35rem);
+      line-height: 1.25;
+    }
+
+    .intro-copy h2 span {
+      color: var(--brand);
+      text-shadow: 0 0 18px rgba(0, 229, 193, 0.3);
+    }
+
+    .intro-copy p {
+      max-width: 780px;
+      margin-top: 0.7rem;
+      color: rgba(235, 243, 241, 0.72);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.05rem, 2vw, 1.28rem);
+      line-height: 1.9;
+    }
+
+    @keyframes introShine {
+      0%, 55% { left: -20%; }
+      80%, 100% { left: 120%; }
+    }
+
+    @keyframes introMarkFloat {
+      50% { transform: translateY(-7px) rotate(2deg); }
+    }
+
+    @keyframes introSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hero-avatar-wrap {
+      width: clamp(190px, 22vw, 240px);
+      height: clamp(190px, 22vw, 240px);
+      margin: 1.6rem auto 1.9rem;
+      border: 1px solid var(--brand);
+      border-radius: 50%;
+      padding: 6px;
+      position: relative;
+      animation: avatarFloat 4.2s 1.9s ease-in-out infinite;
+      transition: transform 0.35s ease;
+    }
+
+    .hero-avatar-wrap::before,
+    .hero-avatar-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      z-index: 2;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      background: url("pro.png") center / cover no-repeat;
+      mix-blend-mode: screen;
+    }
+
+    .hero-avatar-wrap::before {
+      clip-path: inset(14% 0 58% 0);
+      filter: sepia(1) saturate(8) hue-rotate(95deg) brightness(1.25);
+    }
+
+    .hero-avatar-wrap::after {
+      clip-path: inset(62% 0 10% 0);
+      filter: sepia(1) saturate(7) hue-rotate(125deg) brightness(1.1);
+    }
+
+    .hero-avatar-wrap:hover {
+      transform: scale(1.08) rotate(4deg);
+      filter: drop-shadow(0 0 16px rgba(0, 229, 193, 0.68));
+      animation: avatarGlitch 0.72s steps(2, end) infinite;
+    }
+
+    .hero-avatar-wrap:hover::before,
+    .hero-avatar-wrap:hover::after {
+      opacity: 0.85;
+      animation: glitchSlice 0.42s steps(2, end) infinite;
+    }
+
+    .hero-avatar-wrap:hover::after {
+      animation-delay: 0.08s;
+    }
+
+    .hero-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: #101818 url("pro.png") center / cover no-repeat;
+    }
+
+    .hero-avatar-wrap:hover .hero-avatar {
+      animation: avatarImageGlitch 0.72s steps(2, end) infinite;
+    }
+
+    @keyframes navDrop {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes titleReveal {
+      from { opacity: 0; transform: translateY(22px) scale(0.97); filter: blur(8px); }
+      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+    }
+
+    @keyframes avatarIn {
+      from { opacity: 0; transform: scale(0.4) rotate(-25deg); }
+      to { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes avatarFloat {
+      0%, 100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(-13px);
+      }
+    }
+
+    @keyframes particles {
+      from { transform: translate3d(-10px, -6px, 0); opacity: 0.35; }
+      to { transform: translate3d(12px, 14px, 0); opacity: 0.8; }
+    }
+
+    @keyframes orbit {
+      from { transform: rotate(0deg) scale(1); }
+      to { transform: rotate(360deg) scale(1.08); }
+    }
+
+    .mock-window {
+      background: #0f1634;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    [data-theme="light"] .mock-window {
+      background: #f0f4ff;
+      border-color: rgba(50, 84, 153, 0.22);
+    }
+
+    .mock-header {
+      padding: 0.65rem 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-bottom: var(--border);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff7373;
+    }
+
+    .dot:nth-child(2) {
+      background: #ffd86a;
+    }
+
+    .dot:nth-child(3) {
+      background: #59e29f;
+    }
+
+    .mock-content {
+      padding: 1rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .code-line {
+      height: 10px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(110, 168, 255, 0.95), rgba(122, 240, 214, 0.55));
+    }
+
+    .code-line.short {
+      width: 65%;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: linear-gradient(170deg, var(--surface), var(--surface-2));
+      border: var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .card p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .about-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: stretch;
+    }
+
+    #about {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12% 35%, rgba(0, 229, 193, 0.08), transparent 30%),
+        radial-gradient(circle at 88% 65%, rgba(0, 229, 193, 0.06), transparent 32%);
+    }
+
+    #about > .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-leaf-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.9;
+    }
+
+    .about-leaf-layer .leaf {
+      top: -8%;
+      filter: blur(var(--blur, 0));
+    }
+
+    .about-leaf-layer .leaf:nth-child(2n) {
+      --blur: 0.5px;
+    }
+
+    .about-leaf-layer .leaf:nth-child(3n) {
+      --blur: 1px;
+      opacity: calc(var(--opacity) * 0.7);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .timeline-item {
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      border: var(--border);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .timeline-item strong {
+      display: block;
+      font-size: 0.98rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-item span {
+      color: var(--text-soft);
+      font-size: 0.92rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    .skill-chip {
+      border: var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .project-toolbar {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      border: var(--border);
+      background: transparent;
+      color: var(--text-soft);
+      border-radius: 999px;
+      padding: 0.42rem 0.82rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .project-card {
+      border: var(--border);
+      border-radius: var(--radius);
+      background: linear-gradient(165deg, var(--surface), var(--surface-2));
+      padding: 1rem;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .project-thumb {
+      border-radius: 12px;
+      border: var(--border);
+      aspect-ratio: 16 / 9;
+      background:
+        radial-gradient(circle at 90% -30%, rgba(122, 240, 214, 0.36), transparent 52%),
+        linear-gradient(145deg, rgba(40, 60, 115, 0.7), rgba(18, 29, 64, 0.9));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #dce8ff;
+    }
+
+    .project-card h3 {
+      font-size: 1.05rem;
+    }
+
+    .project-card p {
+      color: var(--text-soft);
+      font-size: 0.94rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .meta span {
+      font-size: 0.8rem;
+      border-radius: 999px;
+      border: var(--border);
+      padding: 0.25rem 0.55rem;
+      color: var(--text-soft);
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .process {
+      counter-reset: step;
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .process-item {
+      border: var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-sm);
+      padding: 0.95rem 0.95rem 0.95rem 3rem;
+      position: relative;
+    }
+
+    .process-item::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0.8rem;
+      top: 0.8rem;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #0b1232;
+      background: linear-gradient(135deg, var(--brand-2), var(--brand));
+    }
+
+    .contact-wrap {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-panel {
+      border-radius: var(--radius);
+      border: var(--border);
+      background: linear-gradient(165deg, var(--surface), var(--surface-2));
+      padding: 1rem;
+    }
+
+    .contact-list {
+      margin-top: 0.8rem;
+      display: grid;
+      gap: 0.5rem;
+      color: var(--text-soft);
+    }
+
+    form {
+      display: grid;
+      gap: 0.72rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    label {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      border: var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border-radius: 11px;
+      padding: 0.72rem 0.82rem;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: 2px solid rgba(110, 168, 255, 0.35);
+      border-color: rgba(110, 168, 255, 0.4);
+    }
+
+    .note {
+      color: var(--text-soft);
+      font-size: 0.88rem;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    .section {
+      position: relative;
+      padding: 6rem 0;
+      background:
+        radial-gradient(circle at 50% 0, rgba(0, 229, 193, 0.035), transparent 25rem),
+        #030405;
+    }
+
+    .section + .section {
+      border-top: 1px solid rgba(0, 229, 193, 0.12);
+    }
+
+    .section-title {
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 58px;
+      height: 1px;
+      background: var(--brand);
+      box-shadow: 0 0 12px rgba(0, 229, 193, 0.7);
+    }
+
+    .section-title h2,
+    .card h3,
+    .project-card h3,
+    .contact-panel h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
+      letter-spacing: 0.2px;
+    }
+
+    .section-title h2 {
+      color: #f3f5f4;
+      font-size: clamp(1.7rem, 3vw, 2.45rem);
+    }
+
+    .section-title p,
+    .card p,
+    .project-card p,
+    .contact-panel p,
+    .process-item p,
+    .contact-list {
+      color: rgba(235, 243, 241, 0.68);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .card,
+    .project-card,
+    .contact-panel {
+      position: relative;
+      overflow: hidden;
+      background: rgba(4, 12, 12, 0.7);
+      border: 1px solid rgba(0, 229, 193, 0.28);
+      border-radius: 12px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .card::before,
+    .project-card::before,
+    .contact-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, rgba(0, 229, 193, 0.08), transparent 28%, transparent 72%, rgba(0, 229, 193, 0.035));
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .card:hover,
+    .project-card:hover,
+    .contact-panel:hover {
+      transform: translateY(-7px);
+      border-color: rgba(0, 229, 193, 0.72);
+      box-shadow: 0 18px 38px rgba(0, 229, 193, 0.1);
+    }
+
+    .card:hover::before,
+    .project-card:hover::before,
+    .contact-panel:hover::before {
+      opacity: 1;
+    }
+
+    .card h3,
+    .project-card h3 {
+      color: #f3f5f4;
+      position: relative;
+    }
+
+    .skill-chip,
+    .meta span,
+    .filter-btn,
+    .timeline-item,
+    .process-item {
+      border-color: rgba(0, 229, 193, 0.32);
+      color: rgba(0, 229, 193, 0.88);
+      background: rgba(0, 229, 193, 0.045);
+      transition: 0.3s ease;
+    }
+
+    .skill-chip:hover,
+    .meta span:hover,
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: #02110f;
+      background: var(--brand);
+      border-color: var(--brand);
+      box-shadow: 0 0 18px rgba(0, 229, 193, 0.22);
+    }
+
+    .project-thumb {
+      position: relative;
+      overflow: hidden;
+      border-color: rgba(0, 229, 193, 0.35);
+      background:
+        linear-gradient(135deg, rgba(0, 229, 193, 0.2), transparent 35%),
+        radial-gradient(circle at 80% 20%, rgba(0, 229, 193, 0.24), transparent 30%),
+        #071211;
+      color: var(--brand);
+      font-family: Georgia, "Times New Roman", serif;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .project-thumb-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .project-card:hover .project-thumb {
+      transform: scale(1.025);
+      filter: brightness(1.22);
+    }
+
+    .project-card:hover .project-thumb-image {
+      transform: scale(1.05);
+    }
+
+    #projects {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 8% 18%, rgba(0, 229, 193, 0.1), transparent 30%),
+        radial-gradient(circle at 92% 78%, rgba(43, 102, 255, 0.1), transparent 28%);
+    }
+
+    #projects::before,
+    #projects::after {
+      content: "";
+      position: absolute;
+      width: 18rem;
+      height: 18rem;
+      border: 1px solid rgba(0, 229, 193, 0.12);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      animation: projectOrbit 14s linear infinite;
+    }
+
+    #projects::before {
+      left: -9rem;
+      top: 16%;
+      box-shadow: 0 0 0 32px rgba(0, 229, 193, 0.025), 0 0 0 64px rgba(0, 229, 193, 0.018);
+    }
+
+    #projects::after {
+      right: -9rem;
+      bottom: 8%;
+      animation-direction: reverse;
+      animation-duration: 18s;
+      border-color: rgba(43, 102, 255, 0.14);
+    }
+
+    #projects .section-title h2 {
+      text-shadow: 0 0 20px rgba(0, 229, 193, 0.22);
+    }
+
+    #projects .project-toolbar {
+      position: relative;
+      z-index: 1;
+    }
+
+    #projects .filter-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    #projects .filter-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.28), transparent 80%);
+      transform: translateX(-120%);
+      transition: transform 0.5s ease;
+    }
+
+    #projects .filter-btn:hover::after,
+    #projects .filter-btn.active::after {
+      transform: translateX(120%);
+    }
+
+    #projects .project-grid {
+      perspective: 1200px;
+    }
+
+    #projects .project-card {
+      transform-style: preserve-3d;
+      animation: projectCardIn 0.7s both;
+    }
+
+    #projects .project-card:nth-child(2) { animation-delay: 0.08s; }
+    #projects .project-card:nth-child(3) { animation-delay: 0.16s; }
+    #projects .project-card:nth-child(4) { animation-delay: 0.24s; }
+    #projects .project-card:nth-child(5) { animation-delay: 0.32s; }
+    #projects .project-card:nth-child(6) { animation-delay: 0.4s; }
+    #projects .project-card:nth-child(7) { animation-delay: 0.48s; }
+
+    #projects .project-card::after {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(125deg, transparent 20%, rgba(0, 229, 193, 0.8), transparent 55%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transform: rotate(12deg) translateX(-45%);
+      transition: opacity 0.35s ease, transform 0.75s ease;
+      pointer-events: none;
+    }
+
+    #projects .project-card:hover::after {
+      opacity: 1;
+      transform: rotate(12deg) translateX(45%);
+    }
+
+    #projects .project-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 48%, rgba(0, 229, 193, 0.18) 50%, transparent 52%);
+      background-size: 100% 220%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    #projects .project-card:hover .project-thumb::after {
+      opacity: 1;
+      animation: projectScan 2.2s linear infinite;
+    }
+
+    @keyframes projectCardIn {
+      from { opacity: 0; transform: translateY(24px) rotateX(5deg); }
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+
+    @keyframes projectScan {
+      from { background-position: 0 -100%; }
+      to { background-position: 0 100%; }
+    }
+
+    @keyframes projectOrbit {
+      to { transform: rotate(360deg) translateX(18px) rotate(-360deg); }
+    }
+
+    .github-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 45%, rgba(0, 229, 193, 0.13), transparent 28%),
+        radial-gradient(circle at 90% 50%, rgba(110, 168, 255, 0.14), transparent 32%),
+        #050b0d;
+    }
+
+    .github-card {
+      position: relative;
+      min-height: 330px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) minmax(190px, 0.75fr);
+      align-items: center;
+      gap: clamp(1.3rem, 3vw, 2.5rem);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 1px solid rgba(0, 229, 193, 0.42);
+      border-radius: 22px;
+      background:
+        linear-gradient(110deg, rgba(0, 229, 193, 0.13), transparent 38%),
+        linear-gradient(290deg, rgba(110, 168, 255, 0.08), transparent 42%),
+        rgba(4, 12, 12, 0.82);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.24), inset 0 0 35px rgba(0, 229, 193, 0.04);
+      isolation: isolate;
+    }
+
+    .github-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(0, 229, 193, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 193, 0.05) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(90deg, black, transparent 82%);
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    .github-card::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      z-index: -1;
+      background: conic-gradient(from 180deg, transparent, rgba(0, 229, 193, 0.12), transparent 25%);
+      animation: githubGlow 9s linear infinite;
+    }
+
+    .github-orbit {
+      position: relative;
+      z-index: 1;
+      width: 116px;
+      height: 116px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(0, 229, 193, 0.55);
+      border-radius: 50%;
+      color: #03100e;
+      background: var(--brand);
+      box-shadow: 0 0 0 10px rgba(0, 229, 193, 0.08), 0 0 35px rgba(0, 229, 193, 0.3);
+      animation: githubFloat 4s ease-in-out infinite;
+    }
+
+    .github-orbit::before,
+    .github-orbit::after {
+      content: "";
+      position: absolute;
+      width: 142px;
+      height: 142px;
+      border: 1px dashed rgba(0, 229, 193, 0.3);
+      border-radius: 50%;
+      animation: githubSpin 12s linear infinite;
+    }
+
+    .github-orbit::after {
+      width: 165px;
+      height: 165px;
+      border-color: rgba(110, 168, 255, 0.22);
+      animation-direction: reverse;
+      animation-duration: 17s;
+    }
+
+    .github-orbit span {
+      font-size: 1.65rem;
+      font-weight: 900;
+      letter-spacing: -0.08em;
+    }
+
+    .github-orbit img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .github-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .github-kicker {
+      color: var(--brand);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+    }
+
+    .github-copy h2 {
+      margin-top: 0.35rem;
+      color: #f3f5f4;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      text-shadow: 0 0 22px rgba(0, 229, 193, 0.22);
+    }
+
+    .github-copy p {
+      max-width: 560px;
+      margin: 0.55rem 0 1.25rem;
+      color: rgba(235, 243, 241, 0.68);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .github-grid {
+      position: absolute;
+      right: 2rem;
+      bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(5, 12px);
+      gap: 8px;
+      transform: rotate(-12deg);
+      opacity: 0.6;
+    }
+
+    .github-grid span {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      background: rgba(0, 229, 193, 0.16);
+      animation: githubPulse 2.4s ease-in-out infinite;
+    }
+
+    .github-grid span:nth-child(3n) { background: rgba(0, 229, 193, 0.7); }
+    .github-grid span:nth-child(2n) { animation-delay: 0.35s; }
+    .github-grid span:nth-child(5n) { animation-delay: 0.7s; }
+
+    .github-code {
+      position: relative;
+      z-index: 1;
+      padding: 1rem;
+      border: 1px solid rgba(0, 229, 193, 0.25);
+      border-radius: 12px;
+      background: rgba(1, 7, 8, 0.8);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.25);
+      font: 0.76rem/1.8 "Courier New", monospace;
+      color: rgba(235, 243, 241, 0.62);
+      transform: rotate(3deg);
+      animation: githubTerminalFloat 5s ease-in-out infinite;
+    }
+
+    .github-code::before {
+      content: "●  ●  ●";
+      display: block;
+      margin-bottom: 0.45rem;
+      color: rgba(0, 229, 193, 0.7);
+      letter-spacing: 0.2rem;
+      font-size: 0.58rem;
+    }
+
+    .github-code strong {
+      color: var(--brand);
+      font-weight: 400;
+    }
+
+    .github-code em {
+      color: #9ebcff;
+      font-style: normal;
+    }
+
+    .github-code span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .github-code span:nth-child(3) { padding-left: 0.8rem; }
+    .github-code span:nth-child(4) { padding-left: 1.6rem; color: rgba(255, 255, 255, 0.46); }
+
+    .github-copy .btn {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(110deg, #00e5c1, #63a8ff);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .github-copy .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 25%, rgba(255, 255, 255, 0.42), transparent 75%);
+      transform: translateX(-120%);
+      animation: githubButtonShine 4s ease-in-out infinite;
+    }
+
+    .github-copy .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 229, 193, 0.28);
+    }
+
+    .instagram-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 50%, rgba(245, 76, 139, 0.16), transparent 28%),
+        radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.12), transparent 32%);
+    }
+
+    .instagram-card {
+      position: relative;
+      min-height: 340px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.75fr);
+      align-items: center;
+      gap: 2rem;
+      padding: clamp(1.5rem, 5vw, 3.5rem);
+      border: 1px solid rgba(245, 76, 139, 0.48);
+      border-radius: 24px;
+      background:
+        linear-gradient(115deg, rgba(124, 58, 237, 0.22), transparent 48%),
+        linear-gradient(300deg, rgba(245, 76, 139, 0.14), transparent 50%),
+        rgba(10, 7, 18, 0.9);
+      box-shadow: 0 25px 65px rgba(0, 0, 0, 0.3), inset 0 0 45px rgba(245, 76, 139, 0.05);
+      animation: instagramCardFloat 7s ease-in-out infinite;
+    }
+
+    .instagram-card::before {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      right: -120px;
+      top: -160px;
+      border: 1px solid rgba(245, 76, 139, 0.25);
+      border-radius: 42% 58% 65% 35%;
+      transform: rotate(28deg);
+      animation: instagramShape 12s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    .instagram-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.09) 42%, transparent 58%);
+      transform: translateX(-120%);
+      animation: instagramSheen 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .instagram-copy {
+      position: relative;
+      z-index: 1;
+      animation: instagramCopyIn 1s both;
+    }
+
+    .instagram-copy > * {
+      animation: instagramItemIn 0.8s both;
+    }
+
+    .instagram-copy > :nth-child(1) { animation-delay: 0.15s; }
+    .instagram-copy > :nth-child(2) { animation-delay: 0.3s; }
+    .instagram-copy > :nth-child(3) { animation-delay: 0.45s; }
+    .instagram-copy > :nth-child(4) { animation-delay: 0.6s; }
+    .instagram-copy > :nth-child(5) { animation-delay: 0.75s; }
+
+    .instagram-sparkles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .instagram-sparkles span {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #ff9aba;
+      box-shadow: 0 0 12px 3px rgba(255, 131, 172, 0.7);
+      animation: instagramSparkle 4.5s ease-in-out infinite;
+    }
+
+    .instagram-sparkles span:nth-child(1) { left: 8%; top: 18%; animation-delay: -1s; }
+    .instagram-sparkles span:nth-child(2) { left: 38%; top: 12%; animation-delay: -3.2s; transform: scale(0.7); }
+    .instagram-sparkles span:nth-child(3) { left: 58%; top: 76%; animation-delay: -2.1s; background: #b995ff; }
+    .instagram-sparkles span:nth-child(4) { left: 88%; top: 24%; animation-delay: -4s; transform: scale(0.6); }
+    .instagram-sparkles span:nth-child(5) { left: 73%; top: 88%; animation-delay: -0.5s; background: #ffcf8b; }
+    .instagram-sparkles span:nth-child(6) { left: 46%; top: 90%; animation-delay: -2.8s; transform: scale(0.55); }
+
+    .instagram-kicker::after {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: linear-gradient(90deg, #ff9aba, transparent);
+      animation: instagramLine 2.5s ease-in-out infinite alternate;
+    }
+
+    .instagram-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #ff9aba;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+    }
+
+    .instagram-kicker::before {
+      content: "◎";
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .instagram-copy h2 {
+      margin-top: 0.55rem;
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    .instagram-copy h2 em {
+      color: #ff83ac;
+      font-style: normal;
+    }
+
+    .instagram-copy p {
+      max-width: 570px;
+      margin: 0.85rem 0 1.4rem;
+      color: rgba(255, 239, 246, 0.72);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.02rem;
+    }
+
+    .instagram-handle {
+      display: block;
+      margin-top: 0.8rem;
+      color: rgba(255, 255, 255, 0.56);
+      font-size: 0.82rem;
+    }
+
+    .instagram-art {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 260px;
+      animation: instagramArtIn 1.1s 0.25s both;
+    }
+
+    .instagram-art::before,
+    .instagram-art::after {
+      content: "";
+      position: absolute;
+      width: 210px;
+      height: 210px;
+      border: 1px solid rgba(255, 131, 172, 0.38);
+      border-radius: 50%;
+      animation: instagramOrbit 10s linear infinite;
+    }
+
+    .instagram-art::after {
+      width: 260px;
+      height: 260px;
+      border-style: dashed;
+      border-color: rgba(124, 58, 237, 0.35);
+      animation-direction: reverse;
+      animation-duration: 15s;
+    }
+
+    .instagram-art img {
+      position: relative;
+      z-index: 1;
+      width: min(230px, 80%);
+      aspect-ratio: 1;
+      border: 5px solid rgba(255, 255, 255, 0.16);
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 18px 45px rgba(245, 76, 139, 0.24);
+      transform: rotate(5deg);
+      animation: instagramImageFloat 5s ease-in-out infinite;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .instagram-card:hover .instagram-art img {
+      transform: rotate(0) scale(1.05);
+      box-shadow: 0 20px 60px rgba(245, 76, 139, 0.45);
+    }
+
+    .instagram-btn {
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background: linear-gradient(110deg, #7c3aed, #ed3f91 55%, #ff9c54);
+      box-shadow: 0 10px 28px rgba(237, 63, 145, 0.26);
+    }
+
+    .instagram-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.42), transparent 75%);
+      transform: translateX(-130%);
+      animation: instagramButtonShine 3.8s ease-in-out infinite;
+    }
+
+    .instagram-btn:hover {
+      filter: brightness(1.12);
+      transform: translateY(-3px);
+    }
+
+    @keyframes instagramShape {
+      to { transform: rotate(48deg) translate(20px, 18px); border-radius: 60% 40% 30% 70%; }
+    }
+
+    @keyframes instagramCardFloat {
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes instagramSheen {
+      0%, 42% { transform: translateX(-120%); }
+      72%, 100% { transform: translateX(120%); }
+    }
+
+    @keyframes instagramCopyIn {
+      from { opacity: 0; transform: translateX(-24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes instagramItemIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes instagramArtIn {
+      from { opacity: 0; transform: scale(0.82) rotate(-8deg); }
+      to { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    @keyframes instagramImageFloat {
+      50% { transform: rotate(-2deg) translateY(-9px); }
+    }
+
+    @keyframes instagramSparkle {
+      0%, 100% { opacity: 0.25; transform: translate(0, 8px) scale(0.65); }
+      50% { opacity: 1; transform: translate(8px, -10px) scale(1.25); }
+    }
+
+    @keyframes instagramLine {
+      to { width: 70px; opacity: 0.55; }
+    }
+
+    @keyframes instagramButtonShine {
+      0%, 48% { transform: translateX(-130%); }
+      72%, 100% { transform: translateX(130%); }
+    }
+
+    @keyframes instagramOrbit {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes githubGlow {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes githubFloat {
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes githubSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes githubPulse {
+      50% { transform: scale(1.35); opacity: 0.55; }
+    }
+
+    @keyframes githubTerminalFloat {
+      50% { transform: rotate(-2deg) translateY(-7px); }
+    }
+
+    @keyframes githubButtonShine {
+      0%, 48% { transform: translateX(-120%); }
+      72%, 100% { transform: translateX(120%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #projects::before,
+      #projects::after,
+      #projects .project-card,
+      #projects .project-card:hover .project-thumb::after,
+      .github-card::before,
+      .github-orbit,
+      .github-orbit::before,
+      .github-orbit::after,
+      .github-grid span,
+      .github-code,
+      .github-copy .btn::after,
+      .instagram-card::before,
+      .instagram-card,
+      .instagram-card::after,
+      .instagram-copy,
+      .instagram-copy > *,
+      .instagram-art::before,
+      .instagram-art::after {
+        animation: none;
+      }
+
+      .instagram-art,
+      .instagram-art img,
+      .instagram-sparkles span,
+      .instagram-kicker::after,
+      .instagram-btn::after,
+      .intro-card::after,
+      .intro-mark,
+      .intro-mark::before,
+      .intro-mark::after {
+        animation: none;
+      }
+    }
+
+    .process-item {
+      position: relative;
+    }
+
+    .process-item::before {
+      color: #02110f;
+      background: var(--brand);
+      box-shadow: 0 0 15px rgba(0, 229, 193, 0.35);
+    }
+
+    .contact-panel h2 {
+      color: #f3f5f4;
+      font-size: clamp(1.65rem, 3vw, 2.4rem);
+    }
+
+    input,
+    textarea {
+      border-color: rgba(0, 229, 193, 0.28);
+      background: rgba(0, 229, 193, 0.035);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline-color: rgba(0, 229, 193, 0.45);
+      border-color: var(--brand);
+      box-shadow: 0 0 16px rgba(0, 229, 193, 0.1);
+    }
+
+    footer {
+      background: #030405;
+      border-top: 1px solid rgba(0, 229, 193, 0.12);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: 0.4s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .about-grid,
+      .contact-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .project-grid,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-link {
+        padding-inline: 0.35rem;
+        font-size: 0.72rem;
+      }
+
+      .nav-actions {
+        gap: 0.45rem;
+      }
+
+      .sepa-badge {
+        left: 1rem;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        position: fixed;
+        inset: 70px 1rem auto 1rem;
+        background: var(--surface);
+        border: var(--border);
+        border-radius: 14px;
+        padding: 0.55rem;
+        box-shadow: var(--shadow);
+        flex-direction: column;
+        align-items: stretch;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-10px);
+      }
+
+      .nav-links.open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .nav-actions .btn-primary {
+        display: none;
+      }
+
+      .hero-avatar-wrap {
+        width: 190px;
+        height: 190px;
+      }
+
+      .github-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+      }
+
+      .github-copy p {
+        margin-inline: auto;
+      }
+
+      .github-grid {
+        right: 1rem;
+        bottom: 1rem;
+        opacity: 0.35;
+      }
+
+      .instagram-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .instagram-copy p {
+        margin-inline: auto;
+      }
+
+      .instagram-art {
+        min-height: 220px;
+      }
+
+      .intro-card {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+      }
+
+      .intro-copy {
+        text-align: center;
+      }
+
+      .intro-socials {
+        position: static;
+        grid-column: 1;
+        margin-top: 0.4rem;
+      }
+
+      .sepa-badge {
+        top: auto;
+        bottom: 1.25rem;
+        left: 50%;
+        max-width: none;
+        white-space: nowrap;
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+<link rel="icon" type="image/png" href="./icon.png"></head>
+<body>
+  <header>
+    <div class="container nav">
+      <ul id="navLinks" class="nav-links">
+        <li><a class="nav-link" href="#projects">Portfolio</a></li>
+        <li><a class="nav-link" href="#about">About Me</a></li>
+        <li><a class="nav-link" href="#github">GitHub</a></li>
+        <li><a class="nav-link" href="#instagram">Instagram</a></li>
+        <li><a class="nav-link" href="#contact">Get In Touch</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a class="social-link" href="https://github.com/ghero0201-blip" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+        <a class="social-link" href="https://www.instagram.com/pixelflow_solutions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
+        
+        <button id="themeBtn" class="icon-btn" type="button" aria-label="Switch theme">☾</button>
+        <button id="menuBtn" class="icon-btn menu-toggle" type="button" aria-label="Open menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home" style="--pointer-x: 82.82753515914138%; --pointer-y: 68.12976741570928%;">
+      <div id="leafLayer" class="leaf-layer" aria-hidden="true"><span class="leaf" style="--left: 4%; --size: 22px; --opacity: 0.32; --duration: 13s; --rotation: -12deg; --sway-a: 72px; --sway-b: -35px; --sway-c: 40px; --sway-d: -72px; --delay: -2s;"></span><span class="leaf" style="--left: 10%; --size: 30px; --opacity: 0.2; --duration: 17s; --rotation: -45deg; --sway-a: -62px; --sway-b: 48px; --sway-c: -30px; --sway-d: 62px; --delay: -4s;"></span><span class="leaf" style="--left: 17%; --size: 15px; --opacity: 0.4; --duration: 19s; --rotation: 20deg; --sway-a: 70px; --sway-b: -50px; --sway-c: 25px; --sway-d: -70px; --delay: -1s;"></span><span class="leaf" style="--left: 25%; --size: 27px; --opacity: 0.24; --duration: 15s; --rotation: 65deg; --sway-a: -38px; --sway-b: 55px; --sway-c: -65px; --sway-d: 38px; --delay: -5s;"></span><span class="leaf" style="--left: 33%; --size: 18px; --opacity: 0.3; --duration: 21s; --rotation: -28deg; --sway-a: 52px; --sway-b: -72px; --sway-c: 35px; --sway-d: -52px; --delay: -3s;"></span><span class="leaf" style="--left: 42%; --size: 34px; --opacity: 0.18; --duration: 16s; --rotation: 40deg; --sway-a: -70px; --sway-b: 42px; --sway-c: -50px; --sway-d: 70px; --delay: -7s;"></span><span class="leaf" style="--left: 51%; --size: 20px; --opacity: 0.36; --duration: 18s; --rotation: -55deg; --sway-a: 34px; --sway-b: 68px; --sway-c: -42px; --sway-d: -34px; --delay: -0s;"></span><span class="leaf" style="--left: 60%; --size: 29px; --opacity: 0.23; --duration: 14s; --rotation: 30deg; --sway-a: 72px; --sway-b: -44px; --sway-c: 58px; --sway-d: -72px; --delay: -6s;"></span><span class="leaf" style="--left: 69%; --size: 17px; --opacity: 0.34; --duration: 20s; --rotation: -40deg; --sway-a: -52px; --sway-b: 74px; --sway-c: -25px; --sway-d: 52px; --delay: -2s;"></span><span class="leaf" style="--left: 78%; --size: 25px; --opacity: 0.2; --duration: 16s; --rotation: 58deg; --sway-a: 40px; --sway-b: -65px; --sway-c: 48px; --sway-d: -40px; --delay: -8s;"></span><span class="leaf" style="--left: 87%; --size: 19px; --opacity: 0.31; --duration: 22s; --rotation: -18deg; --sway-a: 65px; --sway-b: -35px; --sway-c: -72px; --sway-d: -65px; --delay: -1s;"></span><span class="leaf" style="--left: 94%; --size: 31px; --opacity: 0.22; --duration: 15s; --rotation: 42deg; --sway-a: -60px; --sway-b: 58px; --sway-c: -28px; --sway-d: 60px; --delay: -5s;"></span></div>
+      <div class="sepa-badge" aria-label="SEPA transfers supported">SEPA Transfers Supported</div>
+      <div class="container hero-grid">
+        <div class="fade-up show">
+          <span class="tag">● Available for freelance and full-time roles</span>
+          <h1>PixelFlow Solutions</h1>
+          <h2 class="accent" style="font-family:Georgia,serif;font-weight:400;font-size:clamp(1.7rem,3vw,2.4rem);animation:fadeIn 1s .35s both;">Full Stack Web Developer</h2>
+          <p>
+            Based In Europe
+          </p>
+          <div class="hero-avatar-wrap" aria-label="Madadi Essaci avatar">
+            <div class="hero-avatar"></div>
+          </div>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#projects">Explore My Work</a>
+            <a class="btn btn-ghost" href="#contact">Let's Talk</a>
+          </div>
+          <div class="quick-stats">
+            <span class="stat-pill">Engineering Student</span>
+            <span class="stat-pill">Data-Driven Problem Solver</span>
+          </div>
+        </div>
+
+        <aside class="hero-card fade-up" aria-label="Developer showcase panel">
+          <div class="mock-window">
+            <div class="mock-header">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="mock-content">
+              <div class="code-line"></div>
+              <div class="code-line short"></div>
+              <div class="code-line"></div>
+              <div class="code-line short"></div>
+            </div>
+          </div>
+          <div class="skills-list">
+            <span class="skill-chip">HTML5</span>
+            <span class="skill-chip">CSS3 / SCSS</span>
+            <span class="skill-chip">JavaScript / TypeScript</span>
+            <span class="skill-chip">React / Next.js</span>
+            <span class="skill-chip">Node.js</span>
+            <span class="skill-chip">REST API</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section intro-section" id="intro">
+      <div class="container">
+        <article class="intro-card fade-up show">
+          <div class="intro-mark" aria-hidden="true">&lt;/&gt;</div>
+          <div class="intro-copy">
+            <span class="intro-label">ENGINEERING × CREATIVITY</span>
+            <h2><span>Engineering Student</span> at the National Polytechnic School (ENP)</h2>
+            <p>
+              I am a passionate Full Stack Developer who transforms ideas into fast, professional websites designed to help businesses grow and increase their revenue.
+              I combine engineering precision with modern design.
+            </p>
+          </div>
+          <div class="intro-socials" aria-label="Social profiles">
+            <a href="https://github.com/ghero0201-blip" target="_blank" rel="noreferrer" aria-label="GitHub">GH</a>
+            <a href="https://www.instagram.com/pixelflow_solutions/" target="_blank" rel="noreferrer" aria-label="Instagram">IG</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-title fade-up show">
+          <h2>What I can do for you</h2>
+          <p>From idea to launch, I build websites and web apps that are clear, fast, and conversion-focused.</p>
+        </div>
+        <div class="cards">
+          <article class="card fade-up show">
+            <h3>Modern Website Development</h3>
+            <p>Marketing websites, personal brands, and business pages with responsive design and strong performance.</p>
+          </article>
+          <article class="card fade-up show">
+            <h3>Web App Development</h3>
+            <p>Interactive dashboards, SaaS products, and custom tools using scalable and maintainable code.</p>
+          </article>
+          <article class="card fade-up show">
+            <h3>Performance &amp; UX Optimization</h3>
+            <p>Speed improvements, accessibility fixes, and UI polishing to improve user retention and conversions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="about-leaf-layer" aria-hidden="true">
+        <span class="leaf" style="--left: 3%; --size: 25px; --opacity: 0.3; --duration: 14s; --rotation: -20deg; --sway-a: 65px; --sway-b: -30px; --sway-c: 45px; --sway-d: -55px; --delay: -2s;"></span>
+        <span class="leaf" style="--left: 14%; --size: 17px; --opacity: 0.22; --duration: 18s; --rotation: 35deg; --sway-a: -55px; --sway-b: 42px; --sway-c: -35px; --sway-d: 60px; --delay: -6s;"></span>
+        <span class="leaf" style="--left: 28%; --size: 31px; --opacity: 0.18; --duration: 16s; --rotation: 70deg; --sway-a: 48px; --sway-b: -68px; --sway-c: 55px; --sway-d: -40px; --delay: -9s;"></span>
+        <span class="leaf" style="--left: 43%; --size: 20px; --opacity: 0.28; --duration: 20s; --rotation: -45deg; --sway-a: -45px; --sway-b: 64px; --sway-c: -52px; --sway-d: 42px; --delay: -4s;"></span>
+        <span class="leaf" style="--left: 58%; --size: 28px; --opacity: 0.2; --duration: 15s; --rotation: 18deg; --sway-a: 70px; --sway-b: -45px; --sway-c: 30px; --sway-d: -65px; --delay: -1s;"></span>
+        <span class="leaf" style="--left: 72%; --size: 16px; --opacity: 0.3; --duration: 19s; --rotation: -65deg; --sway-a: -35px; --sway-b: 55px; --sway-c: -70px; --sway-d: 48px; --delay: -7s;"></span>
+        <span class="leaf" style="--left: 86%; --size: 34px; --opacity: 0.16; --duration: 17s; --rotation: 48deg; --sway-a: 52px; --sway-b: -60px; --sway-c: 38px; --sway-d: -52px; --delay: -3s;"></span>
+        <span class="leaf" style="--left: 96%; --size: 21px; --opacity: 0.24; --duration: 22s; --rotation: -30deg; --sway-a: -62px; --sway-b: 35px; --sway-c: -45px; --sway-d: 65px; --delay: -11s;"></span>
+      </div>
+      <div class="container about-grid">
+        <article class="card fade-up show">
+          <div class="section-title">
+            <h2>About me</h2>
+          </div>
+          <p>
+            I love translating complex ideas into simple and elegant digital experiences.
+            My work combines design awareness with engineering quality, so products look great and stay reliable over time.
+          </p>
+          <div class="skills-list">
+            <span class="skill-chip">UI Engineering</span>
+            <span class="skill-chip">Component Systems</span>
+            <span class="skill-chip">API Integration</span>
+            <span class="skill-chip">SEO Basics</span>
+            <span class="skill-chip">Accessibility</span>
+            <span class="skill-chip">Deployment</span>
+          </div>
+        </article>
+        <aside class="card fade-up show">
+          <h3 style="margin-bottom:0.8rem;">How I work</h3>
+          <div class="process">
+            <div class="process-item">
+              <strong>Discovery</strong>
+              <p>Understand your goals, users, and desired outcomes.</p>
+            </div>
+            <div class="process-item">
+              <strong>Build</strong>
+              <p>Create clean, documented, and scalable implementation.</p>
+            </div>
+            <div class="process-item">
+              <strong>Refine &amp; Launch</strong>
+              <p>Polish UX, improve speed, and deploy with confidence.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="container">
+        <div class="section-title fade-up show">
+          <h2>Selected projects</h2>
+          <div class="project-toolbar">
+            <button type="button" class="filter-btn active" data-filter="all">All</button>
+            <button type="button" class="filter-btn" data-filter="frontend">Front-End</button>
+            <button type="button" class="filter-btn" data-filter="fullstack">Full-Stack</button>
+            <button type="button" class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+          </div>
+        </div>
+        <div id="projectGrid" class="project-grid">
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="cafe-david.png" alt="Café David website preview">
+            </div>
+            <h3>Café David — live café website</h3>
+            <p>
+              My first deployed project: a polished café website for Porto with opening-hours content,
+              responsive sections, and a password-protected admin dashboard that lets staff switch the public status between Open and Closed instantly.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Admin Dashboard</span>
+              <span>Status Control</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://cafe-david-iota.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Café David live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request access to the Café David admin dashboard">Dashboard Access</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="ephemere-nantes.png" alt="Éphémère Nantes Specialty Coffee website preview">
+            </div>
+            <h3>Éphémère Nantes — specialty coffee website</h3>
+            <p>
+              A warm, editorial café website for Nantes with a welcoming hero experience,
+              location details, café highlights, gallery content, and social links for keeping visitors connected.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Specialty Coffee</span>
+              <span>Location &amp; Gallery</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://ephemerenantes-alpha.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Éphémère Nantes live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request information about the Éphémère Nantes project">Project Details</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="dreamin-man.png" alt="Dreamin' Man Paris website preview">
+            </div>
+            <h3>Dreamin' Man Paris — multi-location café website</h3>
+            <p>
+              A Paris café experience with location-focused content, opening hours, social details,
+              and an admin dashboard with the same protected status control as Café David for switching locations between Open and Closed.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Multi-Location</span>
+              <span>Admin Status Control</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://dreammin-man.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Dreamin' Man live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request access to the Dreamin' Man admin dashboard">Dashboard Access</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="constantin-cafe.png" alt="Constantin Cafe website preview">
+            </div>
+            <h3>Constantin Café — Liège café website</h3>
+            <p>
+              A warm café website for Liège with location and directions, opening hours, services,
+              menu highlights, gallery content, and the same password-protected admin status control for switching Open and Closed.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Location &amp; Hours</span>
+              <span>Admin Status Control</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://constantin-cafe-chi.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Constantin Cafe live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request access to the Constantin Cafe admin dashboard">Dashboard Access</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="francesco-pt.png" alt="Francesco De Lorenzo coaching website preview">
+            </div>
+            <h3>Francesco.pt — online coaching platform</h3>
+            <p>
+              A conversion-focused coaching website for men over 30, featuring personalized fitness plans,
+              nutrition strategy, 1-to-1 support, consultation booking, FAQs, and WhatsApp conversion flows.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Conversion Landing Page</span>
+              <span>WhatsApp Booking</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://francescodlpt-pearl.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Francesco PT live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request information about the Francesco PT project">Project Details</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="francesca-longhin.png" alt="Francesca Longhin coaching website preview">
+            </div>
+            <h3>Francesca Longhin — women’s fitness coaching platform</h3>
+            <p>
+              A bold editorial coaching website for a Bikini Athlete and online coach, with scientific training methodology,
+              personalized protocols, 1-to-1 lessons, FAQs, team partnerships, and a direct application journey.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Online Coaching</span>
+              <span>Application Flow</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://francescalonghin-sigma.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Francesca Longhin live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request information about the Francesca Longhin project">Project Details</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="frontend" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="alessio-biffi-preview.png" alt="Alessio Biffi coaching website preview">
+            </div>
+            <h3>Conversion-focused SaaS website</h3>
+            <p>High-impact marketing site with responsive sections, animated pricing, and lead capture.</p>
+            <div class="meta">
+              <span>Next.js</span>
+              <span>TypeScript</span>
+              <span>SEO</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://alessiobifficoach-chi.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Alessio Biffi live website">Live Demo</a>
+              <a class="btn btn-ghost" href="#" aria-label="View source code">Code</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section instagram-section" id="instagram">
+      <div class="container">
+        <article class="instagram-card fade-up show">
+          <div class="instagram-sparkles" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="instagram-copy">
+            <span class="instagram-kicker">LET'S CONNECT</span>
+            <h2>Have an idea?<br><em>Let's talk on Instagram.</em></h2>
+            <p>
+              Want to discuss a project, ask a question, or explore how we can build something great together?
+              Send me a message and let's talk through the details.
+            </p>
+            <a class="btn instagram-btn" href="https://www.instagram.com/pixelflow_solutions/" target="_blank" rel="noreferrer">
+              Message me on Instagram
+            </a>
+            <span class="instagram-handle">@pixelflow_solutions · Open for new conversations</span>
+          </div>
+          <div class="instagram-art" aria-hidden="true">
+            <img src="profile-image.png" alt="">
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section github-section" id="github">
+      <div class="container">
+        <article class="github-card fade-up show">
+          <div class="github-orbit" aria-hidden="true">
+            <img src="profile-image.png" alt="">
+          </div>
+          <div class="github-copy">
+            <span class="github-kicker">OPEN SOURCE &amp; CODE</span>
+            <h2>Explore my GitHub</h2>
+            <p>
+              Discover my projects, experiments, and the code behind the experiences I build.
+            </p>
+            <a class="btn btn-primary" href="https://github.com/ghero0201-blip" target="_blank" rel="noreferrer">
+              Visit my GitHub
+            </a>
+          </div>
+          <div class="github-code" aria-hidden="true">
+            <span><strong>const</strong> creator = <em>"web_gher"</em>;</span>
+            <span><strong>creator</strong>.build(</span>
+            <span><strong>cleanCode</strong>, <em>boldIdeas</em></span>
+            <span>);</span>
+          </div>
+          <div class="github-grid" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-wrap">
+        <article class="contact-panel fade-up show">
+          <h2>Let's build something great</h2>
+          <p style="margin-top:0.55rem;color:var(--text-soft);">
+            If you have a project idea or want to hire a web developer, send a message and I will get back to you.
+          </p>
+          <div class="contact-list">
+            <span>Email: madadi.essaci.2025@gmail.com</span>
+            <span>Location: Your City, Your Country</span>
+            <span>Availability: Open to new projects</span>
+          </div>
+        </article>
+
+        <aside class="contact-panel fade-up show">
+          <form id="contactForm">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" name="name" type="text" placeholder="John Doe" required="">
+            </div>
+            <div class="field">
+              <label for="email">Your email</label>
+              <input id="email" name="email" type="email" placeholder="john@email.com" required="">
+            </div>
+            <div class="field">
+              <label for="message">Project details</label>
+              <textarea id="message" name="message" placeholder="Tell me about your idea..." required=""></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <p id="formNote" class="note">This form opens your email app and pre-fills the message.</p>
+          </form>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year">2026</span> Madadi Essaci — Web Developer Portfolio</p>
+    </div>
+  </footer>
+
+  <script>
+    const root = document.documentElement;
+    const themeBtn = document.getElementById("themeBtn");
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+    const emailValue = "madadi.essaci.2025@gmail.com";
+    const projectButtons = document.querySelectorAll(".filter-btn");
+    const projectCards = document.querySelectorAll(".project-card");
+    const navAnchors = document.querySelectorAll(".nav-link");
+    const sections = document.querySelectorAll("main section[id]");
+    const revealItems = document.querySelectorAll(".fade-up");
+    const leafLayer = document.getElementById("leafLayer");
+    const avatarWrap = document.querySelector(".hero-avatar-wrap");
+    const menuSoundTargets = document.querySelectorAll(".hero-cta .btn, .stat-pill");
+    const sepaBadge = document.querySelector(".sepa-badge");
+    let glitchAudioContext;
+    let glitchSoundTimer;
+
+    const savedTheme = localStorage.getItem("portfolio-theme");
+    if (savedTheme === "light") {
+      root.setAttribute("data-theme", "light");
+      themeBtn.textContent = "☀";
+    }
+
+    themeBtn.addEventListener("click", () => {
+      const isLight = root.getAttribute("data-theme") === "light";
+      if (isLight) {
+        root.removeAttribute("data-theme");
+        localStorage.setItem("portfolio-theme", "dark");
+        themeBtn.textContent = "☾";
+      } else {
+        root.setAttribute("data-theme", "light");
+        localStorage.setItem("portfolio-theme", "light");
+        themeBtn.textContent = "☀";
+      }
+    });
+
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
+
+    navAnchors.forEach((link) => {
+      link.addEventListener("click", () => navLinks.classList.remove("open"));
+    });
+
+    projectButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const selected = button.dataset.filter;
+        projectButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        projectCards.forEach((card) => {
+          const category = card.dataset.category;
+          const visible = selected === "all" || category === selected;
+          card.style.display = visible ? "grid" : "none";
+        });
+      });
+    });
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+          const id = entry.target.getAttribute("id");
+          navAnchors.forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === "#" + id);
+          });
+        });
+      },
+      { threshold: 0.55 }
+    );
+
+    sections.forEach((section) => sectionObserver.observe(section));
+
+    const revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    revealItems.forEach((item) => revealObserver.observe(item));
+
+    const leafSettings = [
+      [4, 22, 0.32, 13, -12, 72, -35, 40, 2],
+      [10, 30, 0.2, 17, -45, -62, 48, -30, 4],
+      [17, 15, 0.4, 19, 20, 70, -50, 25, 1],
+      [25, 27, 0.24, 15, 65, -38, 55, -65, 5],
+      [33, 18, 0.3, 21, -28, 52, -72, 35, 3],
+      [42, 34, 0.18, 16, 40, -70, 42, -50, 7],
+      [51, 20, 0.36, 18, -55, 34, 68, -42, 0],
+      [60, 29, 0.23, 14, 30, 72, -44, 58, 6],
+      [69, 17, 0.34, 20, -40, -52, 74, -25, 2],
+      [78, 25, 0.2, 16, 58, 40, -65, 48, 8],
+      [87, 19, 0.31, 22, -18, 65, -35, -72, 1],
+      [94, 31, 0.22, 15, 42, -60, 58, -28, 5]
+    ];
+
+    leafSettings.forEach(([left, size, opacity, duration, rotation, swayA, swayB, swayC, delay]) => {
+      const leaf = document.createElement("span");
+      leaf.className = "leaf";
+      leaf.style.setProperty("--left", left + "%");
+      leaf.style.setProperty("--size", size + "px");
+      leaf.style.setProperty("--opacity", opacity);
+      leaf.style.setProperty("--duration", duration + "s");
+      leaf.style.setProperty("--rotation", rotation + "deg");
+      leaf.style.setProperty("--sway-a", swayA + "px");
+      leaf.style.setProperty("--sway-b", swayB + "px");
+      leaf.style.setProperty("--sway-c", swayC + "px");
+      leaf.style.setProperty("--sway-d", -swayA + "px");
+      leaf.style.setProperty("--delay", "-" + delay + "s");
+      leafLayer.appendChild(leaf);
+    });
+
+    const hero = document.querySelector(".hero");
+    hero.addEventListener("pointermove", (event) => {
+      const bounds = hero.getBoundingClientRect();
+      const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+      const y = ((event.clientY - bounds.top) / bounds.height) * 100;
+      hero.style.setProperty("--pointer-x", x + "%");
+      hero.style.setProperty("--pointer-y", y + "%");
+    });
+
+    const cycleSepaBadge = () => {
+      sepaBadge.classList.add("visible");
+      window.setTimeout(() => {
+        sepaBadge.classList.remove("visible");
+      }, 5000);
+    };
+
+    cycleSepaBadge();
+    window.setInterval(cycleSepaBadge, 65000);
+
+    const playGlitchBurst = async () => {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) {
+          throw new Error("Web Audio API is not supported in this browser.");
+        }
+
+        if (!glitchAudioContext) {
+          glitchAudioContext = new AudioContext();
+        }
+        if (glitchAudioContext.state === "suspended") {
+          await glitchAudioContext.resume();
+        }
+
+        const now = glitchAudioContext.currentTime;
+        const duration = 0.16 + Math.random() * 0.14;
+        const buffer = glitchAudioContext.createBuffer(
+          1,
+          Math.floor(glitchAudioContext.sampleRate * duration),
+          glitchAudioContext.sampleRate
+        );
+        const data = buffer.getChannelData(0);
+        for (let index = 0; index < data.length; index += 1) {
+          data[index] = (Math.random() * 2 - 1) * (1 - index / data.length);
+        }
+
+        const noise = glitchAudioContext.createBufferSource();
+        const filter = glitchAudioContext.createBiquadFilter();
+        const gain = glitchAudioContext.createGain();
+        noise.buffer = buffer;
+        filter.type = "bandpass";
+        filter.frequency.value = 1200 + Math.random() * 2600;
+        filter.Q.value = 0.8;
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.13, now + 0.015);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        noise.connect(filter).connect(gain).connect(glitchAudioContext.destination);
+        noise.start(now);
+        noise.stop(now + duration);
+
+        const tone = glitchAudioContext.createOscillator();
+        const toneGain = glitchAudioContext.createGain();
+        tone.type = "square";
+        tone.frequency.setValueAtTime(90 + Math.random() * 170, now);
+        tone.frequency.exponentialRampToValueAtTime(40 + Math.random() * 80, now + duration);
+        toneGain.gain.setValueAtTime(0.0001, now);
+        toneGain.gain.exponentialRampToValueAtTime(0.035, now + 0.01);
+        toneGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        tone.connect(toneGain).connect(glitchAudioContext.destination);
+        tone.start(now);
+        tone.stop(now + duration);
+      } catch (error) {
+        console.warn("Glitch audio could not be played:", error);
+      }
+    };
+
+    const playMenuSound = async (type) => {
+      try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) {
+          throw new Error("Web Audio API is not supported in this browser.");
+        }
+
+        if (!glitchAudioContext) {
+          glitchAudioContext = new AudioContext();
+        }
+        if (glitchAudioContext.state === "suspended") {
+          await glitchAudioContext.resume();
+        }
+
+        const now = glitchAudioContext.currentTime;
+        const isConfirm = type === "confirm";
+        const notes = isConfirm ? [392, 587] : [520];
+        notes.forEach((frequency, index) => {
+          const oscillator = glitchAudioContext.createOscillator();
+          const gain = glitchAudioContext.createGain();
+          const start = now + index * 0.045;
+          oscillator.type = isConfirm ? "square" : "triangle";
+          oscillator.frequency.setValueAtTime(frequency, start);
+          oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.18, start + 0.08);
+          gain.gain.setValueAtTime(0.0001, start);
+          gain.gain.exponentialRampToValueAtTime(isConfirm ? 0.085 : 0.055, start + 0.008);
+          gain.gain.exponentialRampToValueAtTime(0.0001, start + (isConfirm ? 0.15 : 0.1));
+          oscillator.connect(gain).connect(glitchAudioContext.destination);
+          oscillator.start(start);
+          oscillator.stop(start + (isConfirm ? 0.16 : 0.11));
+        });
+      } catch (error) {
+        console.warn("Menu audio could not be played:", error);
+      }
+    };
+
+    menuSoundTargets.forEach((target) => {
+      target.addEventListener("mouseenter", () => playMenuSound("hover"));
+      target.addEventListener("click", () => playMenuSound("confirm"));
+    });
+
+    avatarWrap.addEventListener("mouseenter", () => {
+      playGlitchBurst();
+      glitchSoundTimer = setInterval(playGlitchBurst, 850);
+    });
+
+    avatarWrap.addEventListener("mouseleave", () => {
+      clearInterval(glitchSoundTimer);
+      glitchSoundTimer = undefined;
+    });
+
+    const contactForm = document.getElementById("contactForm");
+    const formNote = document.getElementById("formNote");
+    contactForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const subject = encodeURIComponent("New Portfolio Inquiry from " + name);
+      const body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nProject Details:\n" + message);
+      window.location.href = "mailto:" + emailValue + "?subject=" + subject + "&body=" + body;
+      formNote.textContent = "Thanks. Your email app should open now.";
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body></html>
