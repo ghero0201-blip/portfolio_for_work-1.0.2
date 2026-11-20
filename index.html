@@ -1422,6 +1422,7 @@
     #projects .project-card:nth-child(5) { animation-delay: 0.32s; }
     #projects .project-card:nth-child(6) { animation-delay: 0.4s; }
     #projects .project-card:nth-child(7) { animation-delay: 0.48s; }
+    #projects .project-card:nth-child(8) { animation-delay: 0.56s; }
 
     #projects .project-card::after {
       content: "";
@@ -1432,6 +1433,7 @@
       background: linear-gradient(125deg, transparent 20%, rgba(0, 229, 193, 0.8), transparent 55%);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       mask-composite: exclude;
       opacity: 0;
       transform: rotate(12deg) translateX(-45%);
@@ -2478,6 +2480,26 @@
             <div class="project-actions">
               <a class="btn btn-ghost" href="https://alessiobifficoach-chi.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Alessio Biffi live website">Live Demo</a>
               <a class="btn btn-ghost" href="#" aria-label="View source code">Code</a>
+            </div>
+          </article>
+
+          <article class="project-card fade-up show" data-category="fullstack" style="display: grid;">
+            <div class="project-thumb">
+              <img class="project-thumb-image" src="les-beigneurs.png" alt="Les Beigneurs café website preview">
+            </div>
+            <h3>Les Beigneurs — café &amp; brunch website</h3>
+            <p>
+              An inviting café website for Les Beigneurs in Limoges, showcasing artisanal brunch,
+              house-made pastries, opening status, location details, and direct social media connection.
+            </p>
+            <div class="meta">
+              <span>Live Production Site</span>
+              <span>Café &amp; Brunch</span>
+              <span>Instagram</span>
+            </div>
+            <div class="project-actions">
+              <a class="btn btn-ghost" href="https://lesbeigneurs.vercel.app/" target="_blank" rel="noreferrer" aria-label="View Les Beigneurs live website">Live Website</a>
+              <a class="btn btn-ghost" href="#contact" aria-label="Request information about the Les Beigneurs project">Project Details</a>
             </div>
           </article>
 
